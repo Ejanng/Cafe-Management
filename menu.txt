@@ -1,2 +1,5 @@
-CK1 Coke Hot 99.00 4
-CK2 Coke Cold 99.00 0
+CC1 Caramel_Macchiato COLD 100.00 0
+CC2 Spanish_Latte COLD 110.00 0
+CC3 French_Latte COLD 120.00 0
+CC4 Cafe_Americano COLD 130.00 0
+CC5 Dark_Mocha_Latte COLD 140.00 0

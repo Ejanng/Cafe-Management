@@ -1,3 +1,0 @@
-
-Code: CK1, Name: Coke, Size: S, Quantity: 2, Total: 198.00
-Code: CK1, Name: Coke, Size: M, Quantity: 2, Total: 238.00

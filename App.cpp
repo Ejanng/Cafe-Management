@@ -210,6 +210,15 @@ void addItem(struct Item items[], int *numItems) {
     struct Item newItem;
     printf("Enter code: ");
     scanf("%s", newItem.code);
+
+    // Check if the code already exists
+    for (int i = 0; i < *numItems; i++) {
+        if (strcmp(items[i].code, newItem.code) == 0) {
+            printf("Error: Code is already taken. Please enter a different code.\n");
+            return; // Exit the function if the code is already taken
+        }
+    }
+
     printf("Enter name: ");
     scanf("%s", newItem.name);
     printf("Enter temperature: ");
@@ -224,6 +233,7 @@ void addItem(struct Item items[], int *numItems) {
     saveMenu(items, *numItems);
     printf("Item added successfully!\n");
 }
+
 
 void removeItem(struct Item items[], int *numItems) {
     char code[10];
