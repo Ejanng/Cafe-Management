@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define MENU_FILE "menu.txt"
 #define SALES_FILE "sales.txt"
@@ -150,6 +151,12 @@ void sellItems(struct Item items[], int numItems) {
             break;
         }
 
+        // Check if the first character of the code is a digit
+        if (isdigit(code[0])) {
+            printf("Invalid item code: %s. Item code cannot start with a number. Please try again.\n", code);
+            continue;
+        }
+
         struct Item *selectedItem = NULL;
         for (int i = 0; i < numItems; i++) {
             if (strcmp(items[i].code, code) == 0) {
@@ -208,6 +215,12 @@ void addItem(struct Item items[], int *numItems) {
     printf("Enter code: ");
     scanf("%s", newItem.code);
 
+    // Check if the code starts with a number
+    if (isdigit(newItem.code[0])) {
+        printf("Invalid code: Item code cannot start with a number. Please enter a valid code.\n");
+        return;
+    }
+
     // Check if the code already exists
     if (strcmp(newItem.code, "#") != 0) {
         for (int i = 0; i < *numItems; i++) {
@@ -239,6 +252,12 @@ void removeItem(struct Item items[], int *numItems) {
     printf("Enter code of item to remove: ");
     scanf("%s", code);
 
+    // Check if the code starts with a number
+    if (isdigit(code[0])) {
+        printf("Invalid code: Item code cannot start with a number. Please enter a valid code.\n");
+        return;
+    }
+
     int index = -1;
     for (int i = 0; i < *numItems; i++) {
         if (strcmp(items[i].code, code) == 0) {
@@ -265,6 +284,12 @@ void editItem(struct Item items[], int numItems) {
     char code[10];
     printf("Enter code of item to edit: ");
     scanf("%s", code);
+
+    // Check if the code starts with a number
+    if (isdigit(code[0])) {
+        printf("Invalid code: Item code cannot start with a number. Please enter a valid code.\n");
+        return;
+    }
 
     struct Item *selectedItem = NULL;
     for (int i = 0; i < numItems; i++) {

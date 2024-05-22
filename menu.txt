@@ -1,8 +1,8 @@
-CC4 Cafe_Americano COLD 130.00 5
-CC1 Caramel_Macchiato COLD 100.00 1
 1. COLD_COFFEE - 0.00 0
+CC1 Caramel_Macchiato COLD 100.00 1
 CC2 Spanish_Latte COLD 110.00 0
 CC3 French_Latte COLD 120.00 0
+CC4 Cafe_Americano COLD 130.00 5
 CC5 Dark_Mocha_Latte COLD 140.00 0
 CC6 White_Chocolate COLD 150.00 0
 CC7 Nutella_Latte COLD 160.00 0
