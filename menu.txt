@@ -3,3 +3,6 @@ CC2 Spanish_Latte COLD 110.00 0
 CC3 French_Latte COLD 120.00 0
 CC4 Cafe_Americano COLD 130.00 0
 CC5 Dark_Mocha_Latte COLD 140.00 0
+CC6 White_Chocolate COLD 150.00 0
+CC7 Nutella_Latte COLD 160.00 0
+CC8 Vanilla_Latte COLD 170.00 0
