@@ -100,7 +100,7 @@ void displayTotalSales(struct Item items[], int numItems) {
     char top3[3][50] = {"", "", ""};
     determineTop3(items, numItems, top3);
 
-    printf("Top 3 best-selling drinks:\n");
+    printf("Top 3 best-selling:\n");
     for (int i = 0; i < 3 && strlen(top3[i]) > 0; i++) {
         printf("%d. %s\n", i + 1, top3[i]);
     }
