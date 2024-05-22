@@ -1,5 +1,4 @@
-Ashley John
-Ashley John Baguio
+
 CC1 Caramel_Macchiato COLD 100.00
 CC2 Spanish_Latte COLD 110.00
 CC3 French_Latte COLD 120.00
