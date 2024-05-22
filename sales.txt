@@ -1,0 +1,4 @@
+Code: CLC8, Name: Vanilla_Latte, Size: S, Quantity: 2, Total: 500.00
+Code: CLC8, Name: Vanilla_Latte, Size: s, Quantity: 1, Total: 250.00
+Code: CLC8, Name: Vanilla_Latte, Size: s, Quantity: 5, Total: 1250.00
+Code: CLC8, Name: Vanilla_Latte, Size: S, Quantity: 2, Total: 500.00

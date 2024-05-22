@@ -1,0 +1,48 @@
+Ashley John
+Ashley John Baguio
+CC1 Caramel_Macchiato COLD 100.00
+CC2 Spanish_Latte COLD 110.00
+CC3 French_Latte COLD 120.00
+CC4 Cafe_Americano COLD 130.00
+CC5 Dark_Mocha_Latte COLD 140.00
+CC6 White_Chocolate COLD 150.00
+CC7 Nutella_Latte COLD 160.00
+CC8 Vanilla_Latte COLD 170.00
+CH1 Caramel_Macchiato HOT 180.00
+CH2 Spanish_Latte HOT 190.00
+CH3 French_Latte HOT 200.00
+CH4 Cafe_Americano HOT 210.00
+CH5 Dark_Mocha_Latte HOT 220.00
+CH6 White_Chocolate HOT 230.00
+CH7 Nutella_Latte HOT 240.00
+CH8 Vanilla_Latte HOT 250.00
+NCC1 Matcha_Latte COLD 180.00
+NCC2 Strawberry_Matcha_Latte COLD 190.00
+NCC3 Blueberry_Matcha_Latte COLD 200.00
+NCC4 Dark_Choco_Mint COLD 210.00
+NCC5 Alab_Tea COLD 220.00
+CC1 Caramel_Macchiato COLD 100.00
+CC2 Spanish_Latte COLD 110.00
+CC3 French_Latte COLD 120.00
+CC4 Cafe_Americano COLD 130.00
+CC5 Dark_Mocha_Latte COLD 140.00
+CC6 White_Chocolate COLD 150.00
+CC7 Nutella_Latte COLD 160.00
+CC8 Vanilla_Latte COLD 170.00
+CH1 Caramel_Macchiato HOT 180.00
+CH2 Spanish_Latte HOT 190.00
+CH3 French_Latte HOT 200.00
+CH4 Cafe_Americano HOT 210.00
+CH5 Dark_Mocha_Latte HOT 220.00
+CH6 White_Chocolate HOT 230.00
+CH7 Nutella_Latte HOT 240.00
+CH8 Vanilla_Latte HOT 250.00
+NCC1 Matcha_Latte COLD 180.00
+NCC2 Strawberry_Matcha_Latte COLD 190.00
+NCC3 Blueberry_Matcha_Latte COLD 200.00
+NCC4 Dark_Choco_Mint COLD 210.00
+NCC5 Alab_Tea COLD 220.00
+
+
+
+
