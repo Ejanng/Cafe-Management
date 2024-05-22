@@ -32,6 +32,8 @@ void loadMenu(struct Item items[], int *numItems) {
     *numItems = 0;
     while (fscanf(file, "%s %s %s %f %d\n", items[*numItems].code, items[*numItems].name,
             items[*numItems].temperature, &items[*numItems].price, &items[*numItems].quantitySold) == 5) {
+        printf("Loaded item: %s %s %s %.2f %d\n", items[*numItems].code, items[*numItems].name,
+            items[*numItems].temperature, items[*numItems].price, items[*numItems].quantitySold);
         (*numItems)++;
         if (*numItems >= MAX_ITEMS) {
             printf("Maximum number of items exceeded.\n");
@@ -63,57 +65,63 @@ void displayMenuInCmd() {
     system(command);
 }
 
-void determineTop3(struct Sale sales[], int numSales, char top3[][50]) {
-    struct Sale temp;
-    for (int i = 0; i < numSales - 1; i++) {
-        for (int j = 0; j < numSales - i - 1; j++) {
-            if (sales[j].quantity < sales[j + 1].quantity) {
-                temp = sales[j];
-                sales[j] = sales[j + 1];
-                sales[j + 1] = temp;
+void determineTop3(struct Item items[], int numItems, char top3[][50]) {
+    // Sort items based on quantitySold (descending order)
+    for (int i = 0; i < numItems - 1; i++) {
+        for (int j = 0; j < numItems - i - 1; j++) {
+            if (items[j].quantitySold < items[j + 1].quantitySold) {
+                // Swap items
+                struct Item temp = items[j];
+                items[j] = items[j + 1];
+                items[j + 1] = temp;
             }
         }
     }
 
-    for (int i = 0; i < 3 && i < numSales; i++) {
-        strcpy(top3[i], sales[i].name);
+    // Store code, name, and size of the top 3 best-selling items
+    for (int i = 0; i < 3 && i < numItems; i++) {
+        snprintf(top3[i], sizeof(top3[i]), "%s %s %s", items[i].code, items[i].name, items[i].temperature);
     }
 }
 
+
+
 void displayTotalSales(struct Item items[], int numItems) {
     float totalSales = 0.0;
-    int numSales = 0;
-    struct Sale sales[MAX_ITEMS];
 
-    FILE *file = fopen(SALES_FILE, "r");
-    if (!file) {
-        perror("Error opening sales file");
-        return;
+    // Calculate total sales
+    for (int i = 0; i < numItems; i++) {
+        totalSales += items[i].price * items[i].quantitySold;
     }
-
-    while (fscanf(file, "Code: %s, Name: %[^,], Size: %c, Quantity: %d, Total: %f\n",
-            sales[numSales].code, sales[numSales].name, &sales[numSales].size,
-            &sales[numSales].quantity, &sales[numSales].total) == 5) {
-        totalSales += sales[numSales].total;
-        numSales++;
-        if (numSales >= MAX_ITEMS) {
-            printf("Maximum number of sales exceeded.\n");
-            break;
-        }
-    }
-
-    fclose(file);
 
     printf("Total Sales: %.2f\n", totalSales);
 
     char top3[3][50] = {"", "", ""};
-    determineTop3(sales, numSales, top3);
+    determineTop3(items, numItems, top3);
 
     printf("Top 3 best-selling drinks:\n");
     for (int i = 0; i < 3 && strlen(top3[i]) > 0; i++) {
         printf("%d. %s\n", i + 1, top3[i]);
     }
+
+    // Display sales history
+    printf("\nSales History:\n");
+    FILE *salesFile = fopen(SALES_FILE, "r");
+    if (!salesFile) {
+        perror("Error opening sales file");
+        return;
+    }
+
+    char line[100]; // Assuming each line in the sales file is not longer than 100 characters
+    while (fgets(line, sizeof(line), salesFile)) {
+        printf("%s", line);
+    }
+
+    fclose(salesFile);
 }
+
+
+
 
 void logTransaction(struct Item item, int quantity, char size, float totalPrice) {
     FILE *file = fopen(SALES_FILE, "a");
@@ -153,7 +161,7 @@ void sellItems(struct Item items[], int numItems) {
         }
 
         if (selectedItem == NULL) {
-            printf("Invalid item code. Please try again.\n");
+            printf("Invalid item code: %s. Please try again.\n", code);
             continue;
         }
 
@@ -196,6 +204,7 @@ void sellItems(struct Item items[], int numItems) {
         }
     }
 }
+
 
 void addItem(struct Item items[], int *numItems) {
     struct Item newItem;
@@ -287,7 +296,7 @@ int main() {
         switch (choice) {
             case 1:
                 addItem(items, &numItems);
-                break;
+                               break;
             case 2:
                 removeItem(items, &numItems);
                 break;
@@ -299,6 +308,7 @@ int main() {
                 break;
             case 5:
                 sellItems(items, numItems);
+                saveMenu(items, numItems); // Save the updated menu after selling items
                 break;
             case 6:
                 displayTotalSales(items, numItems);
