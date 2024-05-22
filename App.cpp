@@ -33,8 +33,8 @@ void loadMenu(struct Item items[], int *numItems) {
     *numItems = 0;
     while (fscanf(file, "%s %s %s %f %d\n", items[*numItems].code, items[*numItems].name,
             items[*numItems].temperature, &items[*numItems].price, &items[*numItems].quantitySold) == 5) {
-        printf("Loaded item: %s %s %s %.2f %d\n", items[*numItems].code, items[*numItems].name,
-            items[*numItems].temperature, items[*numItems].price, items[*numItems].quantitySold);
+        // printf("Loaded item: %s %s %s %.2f %d\n", items[*numItems].code, items[*numItems].name,
+        //     items[*numItems].temperature, items[*numItems].price, items[*numItems].quantitySold);
         (*numItems)++;
         if (*numItems >= MAX_ITEMS) {
             printf("Maximum number of items exceeded.\n");
@@ -151,7 +151,6 @@ void sellItems(struct Item items[], int numItems) {
             break;
         }
 
-        // Check if the first character of the code is a digit
         if (isdigit(code[0])) {
             printf("Invalid item code: %s. Item code cannot start with a number. Please try again.\n", code);
             continue;
@@ -177,6 +176,7 @@ void sellItems(struct Item items[], int numItems) {
         char size;
         printf("Enter size (S, M, L): ");
         scanf(" %c", &size);
+        size = toupper(size);
 
         float price = selectedItem->price;
         if (size == 'M') {

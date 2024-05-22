@@ -1,3 +1,4 @@
 Code: CC1, Name: Caramel_Macchiato, Size: S, Quantity: 1, Total: 100.00
 Code: CC4, Name: Cafe_Americano, Size: L, Quantity: 5, Total: 800.00
 Code: CC8, Name: Vanilla_Latte, Size: S, Quantity: 9, Total: 1530.00
+Code: CC1, Name: Caramel_Macchiato, Size: M, Quantity: 2, Total: 240.00
