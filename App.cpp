@@ -120,9 +120,6 @@ void displayTotalSales(struct Item items[], int numItems) {
     fclose(salesFile);
 }
 
-
-
-
 void logTransaction(struct Item item, int quantity, char size, float totalPrice) {
     FILE *file = fopen(SALES_FILE, "a");
     if (!file) {
@@ -134,6 +131,7 @@ void logTransaction(struct Item item, int quantity, char size, float totalPrice)
 
     fclose(file);
 }
+
 
 float calculateChange(float total, float payment) {
     return payment - total;
@@ -205,17 +203,18 @@ void sellItems(struct Item items[], int numItems) {
     }
 }
 
-
 void addItem(struct Item items[], int *numItems) {
     struct Item newItem;
     printf("Enter code: ");
     scanf("%s", newItem.code);
 
     // Check if the code already exists
-    for (int i = 0; i < *numItems; i++) {
-        if (strcmp(items[i].code, newItem.code) == 0) {
-            printf("Error: Code is already taken. Please enter a different code.\n");
-            return; // Exit the function if the code is already taken
+    if (strcmp(newItem.code, "#") != 0) {
+        for (int i = 0; i < *numItems; i++) {
+            if (strcmp(items[i].code, newItem.code) == 0) {
+                printf("Error: Code is already taken. Please enter a different code.\n");
+                return; // Exit the function if the code is already taken
+            }
         }
     }
 
