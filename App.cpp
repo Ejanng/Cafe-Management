@@ -92,8 +92,11 @@ void loadMenu(struct Item items[], int *numItems) {
     loadingAnimation(); // Display loading animation
     while (fscanf(file, "%s %s %s %f %d\n", items[*numItems].code, items[*numItems].name,
             items[*numItems].temperature, &items[*numItems].price, &items[*numItems].quantitySold) == 5) {
-        // printf("Loaded item: %s %s %s %.2f %d\n", items[*numItems].code, items[*numItems].name,
-        //     items[*numItems].temperature, items[*numItems].price, items[*numItems].quantitySold);
+        printf("\n\nLoading... \nLoaded item: %s %s %s %.2f %d\n", items[*numItems].code, items[*numItems].name,
+            items[*numItems].temperature, items[*numItems].price, items[*numItems].quantitySold);
+            fflush(stdout);
+            usleep(10000); // Sleep for 0.5 seconds
+            system("cls");
         (*numItems)++;
         // If the maximum number of items has been reached, stop reading
         if (*numItems >= MAX_ITEMS) {
@@ -378,7 +381,7 @@ void sellItems(struct Item items[], int numItems) {
     }
 
     // Print the total amount to pay
-    printf("Total amount to pay: %.2f\n", total);
+    printf("\n\nTotal amount to pay: %.2f\n\n", total);
     // Enter the payment amount
     while (1) {
         printf("Enter payment amount: ");
@@ -425,13 +428,13 @@ void displayTotalSales(struct Item items[], int numItems) {
     // Print the total sales
     printf("\n--------------------------------------------\n");
     printf("--              Total Sales               -- \n");
-    printf("--------------------------------------------\n");
-    printf("Total Sales: %.2f\n", totalSales);
+    printf("--------------------------------------------\n\n");
+    printf("Total Sales: %.2f\n\n", totalSales);
     // Determine the top 3 best-selling
     char top3[3][50] = {"", "", ""};
     determineTop3(items, numItems, top3);
 
-    printf("Top 3 best-selling drinks:\n");
+    printf("Top 3 best-sales:\n");
     for (int i = 0; i < 3 && strlen(top3[i]) > 0; i++) {
         // Print the top 3 best-selling
         printf("%d. %s\n", i + 1, top3[i]);

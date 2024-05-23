@@ -7,3 +7,5 @@ Code: S1, Name: Pandesal_With_Keso_Puti, Size: -, Quantity: 3, Total: 150.00
 Code: CC1, Name: Caramel_Macchiato, Size: -, Quantity: 2, Total: 200.00
 Code: S1, Name: Pandesal_With_Keso_Puti, Size: -, Quantity: 3, Total: 150.00
 Code: CC1, Name: Caramel_Macchiato, Size: M, Quantity: 2, Total: 240.00
+Code: NCC1, Name: Matcha_Latte, Size: S, Quantity: 2, Total: 360.00
+Code: CH3, Name: French_Latte, Size: L, Quantity: 5, Total: 1150.00
