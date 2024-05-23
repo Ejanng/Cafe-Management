@@ -33,3 +33,6 @@ S7 Pepperoni_Pizza - 80.00 0
 S8 Spaghetti - 90.00 0
 S9 Carbonara - 100.00 0
 5. OTHERS - 0.00 0
+CK1 coke cold 69.00 0
+cK3 coke 31 13.11 0
+CKK1 COke co;d 231.00 0

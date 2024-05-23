@@ -32,6 +32,11 @@ struct Sale {
     float total;
 };
 
+    // Function to flush the input buffer
+    void flushInputBuffer() {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+    }
     // -------------------------------------------- 
     // --            Load Function               -- 
     // --------------------------------------------
@@ -474,8 +479,14 @@ int main() {
     while (1) {
         int choice;
         printf("\n1. Add item\n2. Remove item\n3. Edit item\n4. Display menu\n5. Sell items\n6. Display total sales\n7. Exit\nEnter your choice: ");
-        scanf("%d", &choice);
-
+        // Check if input is valid
+        if (scanf("%d", &choice) != 1) {
+            // Clear invalid input from the buffer
+            flushInputBuffer();
+            printf("Invalid input. Please enter a number.\n");
+            continue;
+        }
+        
         switch (choice) {
             case 1:
                 // Add a new item to the menu
