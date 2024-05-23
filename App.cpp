@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <unistd.h>
 
     // -------------------------------------------- 
     // --            Constants                   -- 
@@ -37,6 +38,41 @@ struct Sale {
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
     }
+
+    // Function to display loading animation
+    void loadingAnimation() {
+        printf("Loading ");
+        fflush(stdout);
+        for (int i = 0; i < 3; i++) {
+            printf(".");
+            fflush(stdout);
+            usleep(500000); // Sleep for 0.5 seconds
+        }
+        printf("\n");
+    }
+
+
+void createMenuFile() {
+    // Open the file for writing
+    FILE *file = fopen(MENU_FILE, "w");
+    if (!file) {
+        // If the file cannot be opened, print an error message and return
+        perror("Error creating menu file");
+        return;
+    }
+    fclose(file);
+}
+
+void createSalesFile() {
+    // Open the file for writing
+    FILE *file = fopen(SALES_FILE, "w");
+    if (!file) {
+        // If the file cannot be opened, print an error message and return
+        perror("Error creating menu file");
+        return;
+    }
+    fclose(file);
+}
     // -------------------------------------------- 
     // --            Load Function               -- 
     // --------------------------------------------
@@ -47,11 +83,13 @@ void loadMenu(struct Item items[], int *numItems) {
     if (!file) {
         // If the file cannot be opened, print an error message and return
         perror("Error opening menu file");
+        void createMenuFile();
         return;
     }
 
     // Read the items from the file
     *numItems = 0;
+    loadingAnimation(); // Display loading animation
     while (fscanf(file, "%s %s %s %f %d\n", items[*numItems].code, items[*numItems].name,
             items[*numItems].temperature, &items[*numItems].price, &items[*numItems].quantitySold) == 5) {
         // printf("Loaded item: %s %s %s %.2f %d\n", items[*numItems].code, items[*numItems].name,
@@ -77,6 +115,7 @@ void saveMenu(struct Item items[], int numItems) {
     // if the file cannot be opened, print an error message and return
     if (!file) {
         perror("Error opening menu file");
+        void createMenuFile();
         return;
     }
      // Print the items to the file
@@ -455,6 +494,7 @@ void logTransaction(struct Item item, int quantity, char size, float totalPrice)
     if (!file) {
         // If the file cannot be opened, print an error message and return
         perror("Error opening sales file");
+        void createSalesFile();
         return;
     }
 
