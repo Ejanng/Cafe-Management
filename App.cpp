@@ -5,16 +5,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-    // -------------------------------------------- 
-    // --            Constants                   -- 
     // --------------------------------------------
-    
+    // --            Constants                   --
+    // --------------------------------------------
+
 #define MENU_FILE "menu.txt"
 #define SALES_FILE "sales.txt"
 #define MAX_ITEMS 100
-    
-    // -------------------------------------------- 
-    // --            Function Prototypes         -- 
+
+    // --------------------------------------------
+    // --            Function Prototypes         --
     // --------------------------------------------
 
 struct Item {
@@ -73,8 +73,8 @@ void createSalesFile() {
     }
     fclose(file);
 }
-    // -------------------------------------------- 
-    // --            Load Function               -- 
+    // --------------------------------------------
+    // --            Load Function               --
     // --------------------------------------------
 
 void loadMenu(struct Item items[], int *numItems) {
@@ -108,8 +108,8 @@ void loadMenu(struct Item items[], int *numItems) {
     fclose(file);
 }
 
-    // -------------------------------------------- 
-    // --            Save Function               -- 
+    // --------------------------------------------
+    // --            Save Function               --
     // --------------------------------------------
 
 void saveMenu(struct Item items[], int numItems) {
@@ -129,9 +129,9 @@ void saveMenu(struct Item items[], int numItems) {
     fclose(file);
 }
 
-    // -------------------------------------------- 
-    // --             Add Function               -- 
-    // -------------------------------------------- 
+    // --------------------------------------------
+    // --             Add Function               --
+    // --------------------------------------------
 
 void addItem(struct Item items[], int *numItems) {
     // Add a new item to the menu
@@ -177,8 +177,8 @@ void addItem(struct Item items[], int *numItems) {
     printf("Item added successfully!\n");
 }
 
-    // -------------------------------------------- 
-    // --           Remove Function              -- 
+    // --------------------------------------------
+    // --           Remove Function              --
     // --------------------------------------------
 
 void removeItem(struct Item items[], int *numItems) {
@@ -222,8 +222,8 @@ void removeItem(struct Item items[], int *numItems) {
     printf("Item removed successfully!\n");
 }
 
-    // -------------------------------------------- 
-    // --          Edit Function                 -- 
+    // --------------------------------------------
+    // --          Edit Function                 --
     // --------------------------------------------
 
 void editItem(struct Item items[], int numItems) {
@@ -263,14 +263,14 @@ void editItem(struct Item items[], int numItems) {
     scanf("%s", selectedItem->temperature);
     printf("Enter new price: ");
     scanf("%f", &selectedItem->price);
-    
+
     // Save the menu to the file
     saveMenu(items, numItems);
     printf("Item edited successfully!\n");
 }
 
-    // -------------------------------------------- 
-    // --       Display Menu Function            -- 
+    // --------------------------------------------
+    // --       Display Menu Function            --
     // --------------------------------------------
 
 void displayMenuInCmd() {
@@ -283,20 +283,20 @@ void displayMenuInCmd() {
     system(command);
 }
 
-    // -------------------------------------------- 
-    // --          Log Transaction               -- 
+    // --------------------------------------------
+    // --          Log Transaction               --
     // --------------------------------------------
 
 void logTransaction(struct Item item, int quantity, char size, float totalPrice);
 
-    // -------------------------------------------- 
-    // --        Calculate Change                -- 
+    // --------------------------------------------
+    // --        Calculate Change                --
     // --------------------------------------------
 
 float calculateChange(float total, float payment);
 
-    // -------------------------------------------- 
-    // --           Sell Function                -- 
+    // --------------------------------------------
+    // --           Sell Function                --
     // --------------------------------------------
 
 void sellItems(struct Item items[], int numItems) {
@@ -312,7 +312,7 @@ void sellItems(struct Item items[], int numItems) {
     while (1) {
         printf("\n**************\nEnter item code (or 'EX' to finish): ");
         scanf("%s", code);
-        
+
         // If the code is 'EX', finish the order
         if (strcmp(code, "EX") == 0) {
             break;
@@ -346,7 +346,7 @@ void sellItems(struct Item items[], int numItems) {
 
         float price = selectedItem->price;
         float totalPrice = 0.0;
-        
+
         // Determine if the item is a drink or food based on the code
         if (selectedItem->code[0] != 'S') {  // Assuming food codes start with 'S'
             // For drinks, ask for size
@@ -397,8 +397,8 @@ void sellItems(struct Item items[], int numItems) {
         }
     }
 }
-    // -------------------------------------------- 
-    // --        Calculate Change                -- 
+    // --------------------------------------------
+    // --        Calculate Change                --
     // --------------------------------------------
 
 float calculateChange(float total, float payment) {
@@ -406,14 +406,14 @@ float calculateChange(float total, float payment) {
     return payment - total;
 }
 
-    // -------------------------------------------- 
-    // --        Determine the Top 3             -- 
+    // --------------------------------------------
+    // --        Determine the Top 3             --
     // --------------------------------------------
 
 void determineTop3(struct Item items[], int numItems, char top3[][50]);
 
-    // -------------------------------------------- 
-    // --        Display Total Sales             -- 
+    // --------------------------------------------
+    // --        Display Total Sales             --
     // --------------------------------------------
 
 void displayTotalSales(struct Item items[], int numItems) {
@@ -424,12 +424,12 @@ void displayTotalSales(struct Item items[], int numItems) {
         // Calculate the total sales of each item
         totalSales += items[i].price * items[i].quantitySold;
     }
+    printf("Total Sales: %.2f\n\n", totalSales);
 
     // Print the total sales
     printf("\n--------------------------------------------\n");
     printf("--              Total Sales               -- \n");
     printf("--------------------------------------------\n\n");
-    printf("Total Sales: %.2f\n\n", totalSales);
     // Determine the top 3 best-selling
     char top3[3][50] = {"", "", ""};
     determineTop3(items, numItems, top3);
@@ -458,8 +458,8 @@ void displayTotalSales(struct Item items[], int numItems) {
     fclose(salesFile);
 }
 
-    // -------------------------------------------- 
-    // --        Determine the Top 3             -- 
+    // --------------------------------------------
+    // --        Determine the Top 3             --
     // --------------------------------------------
 
 void determineTop3(struct Item items[], int numItems, char top3[][50]) {
@@ -487,8 +487,8 @@ void determineTop3(struct Item items[], int numItems, char top3[][50]) {
     }
 }
 
-    // -------------------------------------------- 
-    // --          Log Transaction               -- 
+    // --------------------------------------------
+    // --          Log Transaction               --
     // --------------------------------------------
 
 void logTransaction(struct Item item, int quantity, char size, float totalPrice) {
@@ -521,6 +521,7 @@ int main() {
     // Display the menu in the command prompt
     while (1) {
         int choice;
+        
         printf("\n1. Add item\n2. Remove item\n3. Edit item\n4. Display menu\n5. Sell items\n6. Display total sales\n7. Exit\nEnter your choice: ");
         // Check if input is valid
         if (scanf("%d", &choice) != 1) {
