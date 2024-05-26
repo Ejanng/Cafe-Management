@@ -269,6 +269,8 @@ void editItem(struct Item items[], int numItems) {
     printf("Item edited successfully!\n");
 }
 
+
+
     // --------------------------------------------
     // --       Display Menu Function            --
     // --------------------------------------------
@@ -465,13 +467,27 @@ void displayTotalSales(struct Item items[], int numItems) {
 void determineTop3(struct Item items[], int numItems, char top3[][50]) {
     // Create a copy of the items array
     struct Item sortedItems[MAX_ITEMS];
+    int validItems = 0;
+
+    // Filter items with quantitySold > 0
     for (int i = 0; i < numItems; i++) {
-        sortedItems[i] = items[i];
+        if (items[i].quantitySold > 0) {
+            sortedItems[validItems] = items[i];
+            validItems++;
+        }
     }
 
-    // Sort the copied array by quantitySold
-    for (int i = 0; i < numItems - 1; i++) {
-        for (int j = 0; j < numItems - i - 1; j++) {
+    // If no valid items, clear the top3 array and return
+    if (validItems == 0) {
+        for (int i = 0; i < 3; i++) {
+            strcpy(top3[i], "N/A");
+        }
+        return;
+    }
+
+    // Sort the valid items by quantitySold
+    for (int i = 0; i < validItems - 1; i++) {
+        for (int j = 0; j < validItems - i - 1; j++) {
             if (sortedItems[j].quantitySold < sortedItems[j + 1].quantitySold) {
                 // Swap the items
                 struct Item temp = sortedItems[j];
@@ -482,8 +498,12 @@ void determineTop3(struct Item items[], int numItems, char top3[][50]) {
     }
 
     // Copy the top 3 best-selling items to the top3 array
-    for (int i = 0; i < 3 && i < numItems; i++) {
-        snprintf(top3[i], sizeof(top3[i]), "%s %s %s", sortedItems[i].code, sortedItems[i].name, sortedItems[i].temperature);
+    for (int i = 0; i < 3; i++) {
+        if (i < validItems) {
+            snprintf(top3[i], sizeof(top3[i]), "%s %s %s", sortedItems[i].code, sortedItems[i].name, sortedItems[i].temperature);
+        } else {
+            strcpy(top3[i], "N/A");
+        }
     }
 }
 
@@ -516,7 +536,9 @@ int main() {
     int numItems = 0;
     loadMenu(items, &numItems);
 
-    printf("Welcome to the cashier system!\n");
+    printf("\n--------------------------------------------"); 
+    printf("\n--    Welcome to the cashier system!      --");
+    printf("\n--------------------------------------------\n");
 
     // Display the menu in the command prompt
     while (1) {
