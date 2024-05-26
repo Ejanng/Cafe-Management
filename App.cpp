@@ -108,11 +108,16 @@ void readSales(const char *filename, struct Sale sales[], int *numSales) {
     }
 
     *numSales = 0;
-    while (fscanf(file, "%s %c %d",
+    while (fscanf(file, "Code: %[^,], Name: %[^,], Size: %c, Quantity: %d, Total: %f\n",
                   sales[*numSales].code,
+                  sales[*numSales].name,
                   &sales[*numSales].size,
-                  &sales[*numSales].quantity) == 3) {
+                  &sales[*numSales].quantity,
+                  &sales[*numSales].total) == 5) {
         (*numSales)++;
+        if (*numSales >= MAX_ITEMS) {
+            break; // To avoid overflow
+        }
     }
 
     fclose(file);
@@ -126,7 +131,7 @@ void readMenu(const char *filename, struct Item items[], int *numItems) {
     }
 
     *numItems = 0;
-    while (fscanf(file, "%s %s %s %f %d",
+    while (fscanf(file, "%[^,], %[^,], %[^,], %f, %d\n",
                   items[*numItems].code,
                   items[*numItems].name,
                   items[*numItems].temperature,
@@ -406,35 +411,27 @@ void displayTotalSales(struct Item items[], int numItems) {
     printf("\n--------------------------------------------\n");
     printf("--              Total Sales               -- \n");
     printf("--------------------------------------------\n\n");
-    printf("\nTotal Sales: %.2f\n\n", totalSales);
+    printf("Total Sales: %.2f\n\n", totalSales);
 
-    char top3[3][50] = {"", "", ""};
+    char top3[3][50];
     determineTop3(items, numItems, top3);
 
-   // Display the top 3 best selling items
     printf("Top 3 Best Selling Items:\n");
     for (int i = 0; i < 3; i++) {
         if (top3[i][0] != '\0') {
             printf("%d. %s\n", i + 1, top3[i]);
         }
-    }   
+    }
 
     printf("\nSales History:\n");
-    FILE *salesFile = fopen(SALES_FILE, "r");
-    if (!salesFile) {
-        perror("Error opening sales file");
-        return;
+    for (int i = 0; i < numSales; i++) {
+        printf("Code: %s, Name: %s, Size: %c, Quantity: %d, Total: %.2f\n",
+               sales[i].code, sales[i].name, sales[i].size, sales[i].quantity, sales[i].total);
     }
 
-    char line[100];
-    while (fgets(line, sizeof(line), salesFile)) {
-        printf("%s", line);
-    }
-
-    printf("\n**************\nEnter any key to Exit!");
-    char code[3]; // Change the data type of 'code' from 'char' to 'char[]'
-    scanf("%s", code); // Remove the '&' operator before 'code'
-    fclose(salesFile);
+    printf("\n**************\nEnter any key to Exit!\n");
+    char exit;
+    scanf("%s", &exit);
 }
 
 void determineTop3(struct Item items[], int numItems, char top3[][50]) {
