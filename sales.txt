@@ -1,0 +1,2 @@
+Code: CC, Name: Name, Size: L, Quantity: 5, Total: 645.00
+Code: CC, Name: Name, Size: A, Quantity: 45, Total: 4455.00

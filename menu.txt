@@ -1,0 +1,4 @@
+COKE1, COke, COldd, 99.00, 0
+CC, Name, Cold, 99.00, 50
+CC1, Coke a, naice, 99.00, 0
+m2, Coke, Coke, 58028955850336264253341696.00, 0
