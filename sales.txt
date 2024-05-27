@@ -1,2 +1,3 @@
-Code: CC, Name: Name, Size: L, Quantity: 5, Total: 645.00
-Code: CC, Name: Name, Size: A, Quantity: 45, Total: 4455.00
+Code: CC1, Name: Caramel Macchiato, Size: M, Quantity: 90, Total: 10800.00
+Code: CC2, Name: Spanish Latte, Size: L, Quantity: 8, Total: 1120.00
+Code: NCC2, Name: Strawberry Matcha Latte, Size: A, Quantity: 55, Total: 10450.00

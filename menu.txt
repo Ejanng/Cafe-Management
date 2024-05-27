@@ -1,4 +1,21 @@
-COKE1, COke, COldd, 99.00, 0
-CC, Name, Cold, 99.00, 50
-CC1, Coke a, naice, 99.00, 0
-m2, Coke, Coke, 58028955850336264253341696.00, 0
+CC1, Caramel Macchiato, COLD, 100.00, 90
+CC2, Spanish Latte, COLD, 110.00, 8
+CC3, French Latte, COLD, 120.00, 0
+CC4, Cafe Americano, COLD, 130.00, 0
+CC5, Dark Mocha Latte, COLD, 140.00, 0
+CC6, White Chocolate, COLD, 150.00, 0
+CC7, Nutella Latte, COLD, 160.00, 0
+CC8, Vanilla Latte, COLD, 170.00, 0
+CH1, Caramel Macchiato, HOT, 180.00, 0
+CH2, Spanish Latte, HOT, 190.00, 0
+CH3, French Latte, HOT, 200.00, 0
+CH4, Cafe Americano, HOT, 210.00, 0
+CH5, Dark Mocha Latte, HOT, 220.00, 0
+CH6, White Chocolate, HOT, 230.00, 0
+CH7, Nutella Latte, HOT, 240.00, 0
+CH8, Vanilla Latte, HOT, 250.00, 0
+NCC1, Matcha Latte, COLD, 180.00, 0
+NCC2, NEw name, COld, 190.00, 55
+NCC3, Blueberry Matcha Latte, COLD, 200.00, 0
+NCC4, Dark Choco Mint, COLD, 210.00, 0
+NCC5, Alab Tea, COLD, 220.00, 0

@@ -100,11 +100,22 @@ void saveMenu(struct Item items[], int numItems) {
     fclose(file);
 }
 
+void updateSales(struct Sale sales[], int numSales, const char *oldCode, const char *newCode, const char *newName, float newPrice) {
+    for (int i = 0; i < numSales; i++) {
+        if (strcmp(sales[i].code, oldCode) == 0) {
+            strcpy(sales[i].code, newCode);
+            strcpy(sales[i].name, newName);
+            sales[i].total = newPrice * sales[i].quantity;
+        }
+    }
+}
+
 void readSales(const char *filename, struct Sale sales[], int *numSales) {
     FILE *file = fopen(filename, "r");
     if (!file) {
         perror("Could not open file");
-        exit(EXIT_FAILURE);
+        createSalesFile();
+        return;
     }
 
     *numSales = 0;
@@ -146,43 +157,68 @@ void readMenu(const char *filename, struct Item items[], int *numItems) {
     fclose(file);
 }
 
-void addItem(struct Item items[], int *numItems) {
-    struct Item newItem;
-    printf("\n--------------------------------------------\n");
-    printf("--             Adding Item...             -- \n");
-    printf("--------------------------------------------\n");
-    printf("Enter code: ");
-    scanf("%s", newItem.code);
-
-    if (isdigit(newItem.code[0])) {
-        printf("Invalid code: Item code cannot start with a number. Please enter a valid code.\n");
-        return;
+int isCodeExist(const char *filename, const char *code) {
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        perror("Could not open file");
+        exit(EXIT_FAILURE);
     }
 
-    if (strcmp(newItem.code, "#") != 0) {
-        for (int i = 0; i < *numItems; i++) {
-            if (strcmp(items[i].code, newItem.code) == 0) {
-                printf("Error: Code is already taken. Please enter a different code.\n");
-                return;
-            }
+    char fileCode[10], fileName[50], fileTemperature[10];
+    float filePrice;
+    int fileQuantitySold;
+
+    while (fscanf(file, "%[^,], %[^,], %[^,], %f, %d\n",
+                  fileCode, fileName, fileTemperature, &filePrice, &fileQuantitySold) == 5) {
+        if (strcmp(fileCode, code) == 0) {
+            fclose(file);
+            return 1; // Code exists
         }
     }
 
-    printf("Enter name: ");
-    scanf(" %[^\n]s", newItem.name);
-    printf("Enter temperature: ");
-    scanf("%s", newItem.temperature);
-    printf("Enter price: ");
-    scanf("%f", &newItem.price);
-    newItem.quantitySold = 0;
-
-    items[*numItems] = newItem;
-    (*numItems)++;
-    saveMenu(items, *numItems);
-    printf("Item added successfully!\n");
-    usleep(5000000);
-    system("cls");
+    fclose(file);
+    return 0; // Code does not exist
 }
+
+// void addItem(struct Item items[], int *numItems) {
+//     struct Item newItem;
+//     printf("\n--------------------------------------------\n");
+//     printf("--             Adding Item...             -- \n");
+//     printf("--------------------------------------------\n");
+//     printf("Enter code: ");
+//     scanf("%s", newItem.code);
+
+//     if (isdigit(newItem.code[0])) {
+//         printf("Invalid code: Item code cannot start with a number. Please enter a valid code.\n");
+//         usleep(5000000);
+//         system("cls");
+//         return;
+//     }
+
+//     for (int i = 0; i < *numItems; i++) {
+//         if (strcmp(items[i].code, newItem.code) == 0) {
+//             printf("Error: Code is already taken. Please enter a different code.\n");
+//             usleep(5000000);
+//             system("cls");
+//             return;
+//         }
+//     }
+
+//     printf("Enter name: ");
+//     scanf(" %[^\n]s", newItem.name);
+//     printf("Enter temperature: ");
+//     scanf("%s", newItem.temperature);
+//     printf("Enter price: ");
+//     scanf("%f", &newItem.price);
+//     newItem.quantitySold = 0;
+
+//     items[*numItems] = newItem;
+//     (*numItems)++;
+//     saveMenu(items, *numItems);
+//     printf("Item added successfully!\n");
+//     usleep(5000000);
+//     system("cls");
+// }
 
 void removeItem(struct Item items[], int *numItems) {
     char code[10];
@@ -229,13 +265,6 @@ void editItem(struct Item items[], int numItems) {
     printf("Enter code of item to edit: ");
     scanf("%s", code);
 
-    if (isdigit(code[0])) {
-        printf("Invalid code: Item code cannot start with a number. Please enter a valid code.\n");
-        usleep(5000000);
-        system("cls");
-        return;
-    }
-
     struct Item *selectedItem = NULL;
     for (int i = 0; i < numItems; i++) {
         if (strcmp(items[i].code, code) == 0) {
@@ -252,33 +281,52 @@ void editItem(struct Item items[], int numItems) {
     }
 
     int choice;
-    printf("What do you want to edit?\n1. Name\n2. Temperature\n3. Price\n4. Quantity Sold\nChoice: ");
-    scanf("%d", &choice);
-    flushInputBuffer();
-    switch (choice) {
-        case 1:
-            printf("Enter new name: ");
-            scanf(" %[^\n]s", selectedItem->name);
-            break;
-        case 2:
-            printf("Enter new temperature: ");
-            scanf("%s", selectedItem->temperature);
-            break;
-        case 3:
-            printf("Enter new price: ");
-            scanf("%f", &selectedItem->price);
-            break;
-        case 4:
-            printf("Enter new quantity sold: ");
-            scanf("%d", &selectedItem->quantitySold);
-            break;
-        default:
-            printf("Invalid choice\n");
+    while (1) {
+        printf("What do you want to edit?\n1. Code\n2. Name\n3. Temperature\n4. Price\n5. Done\nChoice: ");
+        if (scanf("%d", &choice) != 1) {
+            flushInputBuffer();
+            printf("Invalid input. Please enter a number.\n");
+            continue;
+        }
+        flushInputBuffer();
+
+        switch (choice) {
+            // case 1:
+            //     while (1) {
+            //         char newCode[10];
+            //         printf("Enter new Code: ");
+            //         scanf(" %[^\n]s", newCode);
+
+            //         if (isCodeExist("menu.txt", newCode)) {
+            //             printf("Error: The code '%s' already exists. Please enter a different code.\n", newCode);
+            //         } else {
+            //             strcpy(selectedItem->code, newCode);
+            //             break;
+            //         }
+            //     }
+            //     break;
+            case 1:
+                printf("Enter new name: ");
+                scanf(" %[^\n]s", selectedItem->name);
+                break;
+            case 2:
+                printf("Enter new temperature: ");
+                scanf("%s", selectedItem->temperature);
+                break;
+            case 3:
+                printf("Enter new price: ");
+                scanf("%f", &selectedItem->price);
+                break;
+            case 4:
+                saveMenu(items, numItems);
+                printf("Item edited successfully!\n");
+                usleep(5000000);
+                system("cls");
+                return;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
     }
-    saveMenu(items, numItems);
-    printf("Item edited successfully!\n");
-    usleep(5000000);
-    system("cls");
 }
 
 void displayMenuInCmd() {
@@ -515,7 +563,6 @@ int main() {
         switch (choice) {
             case 1:
                 system("cls");
-                addItem(items, &numItems);
                 break;
             case 2:
                 system("cls");
