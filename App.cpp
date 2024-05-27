@@ -180,46 +180,6 @@ int isCodeExist(const char *filename, const char *code) {
     return 0; // Code does not exist
 }
 
-// void addItem(struct Item items[], int *numItems) {
-//     struct Item newItem;
-//     printf("\n--------------------------------------------\n");
-//     printf("--             Adding Item...             -- \n");
-//     printf("--------------------------------------------\n");
-//     printf("Enter code: ");
-//     scanf("%s", newItem.code);
-
-//     if (isdigit(newItem.code[0])) {
-//         printf("Invalid code: Item code cannot start with a number. Please enter a valid code.\n");
-//         usleep(5000000);
-//         system("cls");
-//         return;
-//     }
-
-//     for (int i = 0; i < *numItems; i++) {
-//         if (strcmp(items[i].code, newItem.code) == 0) {
-//             printf("Error: Code is already taken. Please enter a different code.\n");
-//             usleep(5000000);
-//             system("cls");
-//             return;
-//         }
-//     }
-
-//     printf("Enter name: ");
-//     scanf(" %[^\n]s", newItem.name);
-//     printf("Enter temperature: ");
-//     scanf("%s", newItem.temperature);
-//     printf("Enter price: ");
-//     scanf("%f", &newItem.price);
-//     newItem.quantitySold = 0;
-
-//     items[*numItems] = newItem;
-//     (*numItems)++;
-//     saveMenu(items, *numItems);
-//     printf("Item added successfully!\n");
-//     usleep(5000000);
-//     system("cls");
-// }
-
 void removeItem(struct Item items[], int *numItems) {
     char code[10];
     printf("\n--------------------------------------------\n");
@@ -291,20 +251,6 @@ void editItem(struct Item items[], int numItems) {
         flushInputBuffer();
 
         switch (choice) {
-            // case 1:
-            //     while (1) {
-            //         char newCode[10];
-            //         printf("Enter new Code: ");
-            //         scanf(" %[^\n]s", newCode);
-
-            //         if (isCodeExist("menu.txt", newCode)) {
-            //             printf("Error: The code '%s' already exists. Please enter a different code.\n", newCode);
-            //         } else {
-            //             strcpy(selectedItem->code, newCode);
-            //             break;
-            //         }
-            //     }
-            //     break;
             case 1:
                 printf("Enter new name: ");
                 scanf(" %[^\n]s", selectedItem->name);
@@ -563,6 +509,7 @@ int main() {
         switch (choice) {
             case 1:
                 system("cls");
+                addItem(items, &numItems);
                 break;
             case 2:
                 system("cls");
