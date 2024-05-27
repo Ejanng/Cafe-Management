@@ -1,3 +1,9 @@
 Code: CC1, Name: Caramel Macchiato, Size: M, Quantity: 90, Total: 10800.00
 Code: CC2, Name: Spanish Latte, Size: L, Quantity: 8, Total: 1120.00
 Code: NCC2, Name: Strawberry Matcha Latte, Size: A, Quantity: 55, Total: 10450.00
+Code: CC5, Name: Dark Mocha Latte, Size: S, Quantity: 9, Total: 1260.00
+Code: CC5, Name: Dark Mocha Latte, Size: L, Quantity: 9, Total: 1530.00
+Code: CH6, Name: White Chocolate, Size: L, Quantity: 1, Total: 260.00
+Code: CH6, Name: White Chocolate, Size: S, Quantity: 1, Total: 100.00
+Code: CH6, Name: White Chocolate, Size: S, Quantity: 1, Total: 150.00
+Code: CH6, Name: White Chocolate, Size: S, Quantity: 1, Total: 1.00

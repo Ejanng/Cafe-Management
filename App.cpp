@@ -157,29 +157,6 @@ void readMenu(const char *filename, struct Item items[], int *numItems) {
     fclose(file);
 }
 
-int isCodeExist(const char *filename, const char *code) {
-    FILE *file = fopen(filename, "r");
-    if (!file) {
-        perror("Could not open file");
-        exit(EXIT_FAILURE);
-    }
-
-    char fileCode[10], fileName[50], fileTemperature[10];
-    float filePrice;
-    int fileQuantitySold;
-
-    while (fscanf(file, "%[^,], %[^,], %[^,], %f, %d\n",
-                  fileCode, fileName, fileTemperature, &filePrice, &fileQuantitySold) == 5) {
-        if (strcmp(fileCode, code) == 0) {
-            fclose(file);
-            return 1; // Code exists
-        }
-    }
-
-    fclose(file);
-    return 0; // Code does not exist
-}
-
 void removeItem(struct Item items[], int *numItems) {
     char code[10];
     printf("\n--------------------------------------------\n");
@@ -217,6 +194,56 @@ void removeItem(struct Item items[], int *numItems) {
     system("cls");
 }
 
+void addItem(struct Item items[], int *numItems) {
+    // Add a new item to the menu
+    struct Item newItem;
+    printf("\n--------------------------------------------\n");
+    printf("--             Adding Item...             -- \n");
+    printf("--------------------------------------------\n");
+    printf("Enter code: ");
+    scanf("%s", newItem.code);
+
+    // Check if the code starts with a number
+    if (isdigit(newItem.code[0])) {
+        printf("Invalid code: Item code cannot start with a number. Please enter a valid code.\n");
+        usleep(5000000);
+        system("cls");
+        return;
+    }
+
+    // Ignore the code if it is '#'
+    if (strcmp(newItem.code, "#") != 0) {
+        // Check if the code is already taken
+        for (int i = 0; i < *numItems; i++) {
+            if (strcmp(items[i].code, newItem.code) == 0) {
+                printf("Error: Code is already taken. Please enter a different code.\n");
+                usleep(5000000);
+                system("cls");
+                return;
+            }
+        }
+    }
+
+    // Enter the name, temperature, and price of the new item
+    printf("Enter name: ");
+    scanf("%s", newItem.name);
+    printf("Enter temperature: ");
+    scanf("%s", newItem.temperature);
+    printf("Enter price: ");
+    scanf("%f", &newItem.price);
+    newItem.quantitySold = 0;
+
+    // Add the new item to the menu
+    items[*numItems] = newItem;
+    (*numItems)++;
+
+    // Save the menu to the file
+    saveMenu(items, *numItems);
+    printf("Item added successfully!\n");
+    usleep(5000000);
+    system("cls");
+}
+
 void editItem(struct Item items[], int numItems) {
     char code[10];
     printf("\n--------------------------------------------\n");
@@ -242,7 +269,7 @@ void editItem(struct Item items[], int numItems) {
 
     int choice;
     while (1) {
-        printf("What do you want to edit?\n1. Code\n2. Name\n3. Temperature\n4. Price\n5. Done\nChoice: ");
+        printf("What do you want to edit?\n1. Name\n2. Temperature\n3. Price\n4. Done\nChoice: ");
         if (scanf("%d", &choice) != 1) {
             flushInputBuffer();
             printf("Invalid input. Please enter a number.\n");
@@ -357,7 +384,14 @@ void sellItems(struct Item items[], int numItems) {
     printf("\n\nTotal amount to pay: %.2f\n\n", total);
     while (1) {
         printf("Enter payment amount: ");
-        scanf("%f", &payment);
+        int result = scanf("%f", &payment);
+
+        // Check if input is valid
+        if (result != 1) {
+            flushInputBuffer(); // Clear the invalid input from the buffer
+            printf("Invalid input. Please enter a number.\n");
+            continue;
+        }
 
         if (payment < total) {
             printf("Insufficient payment. Please enter an amount of at least %.2f.\n", total);
@@ -367,28 +401,18 @@ void sellItems(struct Item items[], int numItems) {
             break;
         }
     }
+
     usleep(5000000);
     system("cls");
 }
 
 void determineTop3(struct Item items[], int numItems, char top3[][50]);
 
-float calculateTotalSales(struct Item items[], int numItems, struct Sale sales[], int numSales) {
+float calculateTotalSales(struct Sale sales[], int numSales) {
     float totalSales = 0.0;
 
     for (int i = 0; i < numSales; i++) {
-        for (int j = 0; j < numItems; j++) {
-            if (strcmp(sales[i].code, items[j].code) == 0) {
-                float price = items[j].price;
-                if (sales[i].size == 'M') {
-                    price += 20.0;
-                } else if (sales[i].size == 'L') {
-                    price += 30.0;
-                }
-                totalSales += price * sales[i].quantity;
-                break;
-            }
-        }
+        totalSales += sales[i].total;
     }
 
     return totalSales;
@@ -400,7 +424,7 @@ void displayTotalSales(struct Item items[], int numItems) {
 
     readSales("sales.txt", sales, &numSales);
 
-    float totalSales = calculateTotalSales(items, numItems, sales, numSales);
+    float totalSales = calculateTotalSales(sales, numSales);
 
     printf("\n--------------------------------------------\n");
     printf("--              Total Sales               -- \n");
